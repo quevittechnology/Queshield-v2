@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Security Checker - QueShield</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🛡️ QueShield</h1>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/url-checker.html" class="active">URL Checker</a>
+                <a href="/phone-checker.html">Phone Checker</a>
+                <a href="/scam-education.html">Scam Education</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="tool-section">
+        <div class="container">
+            <h1>🔍 URL Security Scanner</h1>
+            <p class="tool-description">Check if a website is safe before visiting</p>
+
+            <div class="tool-card">
+                <div class="input-group">
+                    <input type="url" id="urlInput" placeholder="Enter URL (e.g., https://example.com)"
+                        class="tool-input">
+                    <button onclick="scanURL()" class="btn btn-primary">Scan URL</button>
+                </div>
+
+                <div id="loading" class="loading" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Scanning URL...</p>
+                </div>
+
+                <div id="results" class="results" style="display:none;"></div>
+            </div>
+
+            <div class="info-section">
+                <h3>What we check:</h3>
+                <ul>
+                    <li>✓ Phishing detection</li>
+                    <li>✓ Typosquatting (fake domains)</li>
+                    <li>✓ SSL/HTTPS verification</li>
+                    <li>✓ Suspicious TLDs (.tk, .ml, etc.)</li>
+                    <li>✓ Domain reputation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 QueShield. Privacy-First Security</p>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script>
+        async function scanURL() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch('/api/scan-url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                document.getElementById('results').innerHTML = `<div class="error">Scan failed: ${error.message}</div>`;
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+            }
+        }
+
+        function displayResults(data) {
+            const riskColors = { safe: '#10b981', suspicious: '#f59e0b', dangerous: '#ef4444' };
+            const color = riskColors[data.riskLevel] || '#6b7280';
+
+            let html = `
+                <div class="result-header" style="border-left: 4px solid ${color};">
+                    <h2 style="color: ${color};">${data.riskLevel.toUpperCase()}</h2>
+                    <p class="confidence">Confidence: ${data.confidence}%</p>
+                </div>
+                <div class="result-details">
+                    <h3>Threats Detected:</h3>
+                    <ul>
+                        ${data.threats.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('results').innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

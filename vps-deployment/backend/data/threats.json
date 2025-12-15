@@ -1,0 +1,45 @@
+{
+    "lastUpdated": "2024-12-14T12:00:00Z",
+    "phishingDomains": [
+        "goog1e.com",
+        "faceb00k.com",
+        "amaz0n.com",
+        "paypa1.com",
+        "netfIix.com",
+        "microsfot.com",
+        "app1e.com",
+        "g00gle.com",
+        "facebok.com",
+        "arnazom.com"
+    ],
+    "spamPatterns": [
+        "140xxxxxxx",
+        "1800xxxxxx",
+        "0000000000",
+        "1111111111",
+        "9999999999",
+        "1234567890"
+    ],
+    "scamKeywords": [
+        "digital arrest",
+        "CBI officer",
+        "police case",
+        "IT department",
+        "tax fraud",
+        "immediate payment",
+        "account blocked",
+        "verify OTP",
+        "share password",
+        "urgent action required"
+    ],
+    "legitimateDomains": [
+        "google.com",
+        "facebook.com",
+        "amazon.com",
+        "paytm.com",
+        "phonepe.com",
+        "gpay.com",
+        "apple.com",
+        "microsoft.com"
+    ]
+}

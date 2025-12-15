@@ -75,11 +75,13 @@
             </intent-filter>
         </activity>
         
-        <!-- Background Service -->
+        <!-- Background Service - Temporarily disabled due to plugin compatibility -->
+        <!--
         <service
             android:name="id.flutter.flutter_background_service.BackgroundService"
             android:foregroundServiceType="dataSync"
             android:exported="false"/>
+        -->
         
         <!-- Don't delete the meta-data below -->
         <meta-data
